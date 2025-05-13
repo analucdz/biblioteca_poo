@@ -73,9 +73,14 @@ class Livro {
 # 📋 Método exibirMenu()
 - Mostra o cardápio de opções pro usuário. É só aquele bloquinho que imprime:
 ```java
-1. Adicionar Novo Livro
-2. Pesquisar Livro por Título
-...
+ private static void exibirMenu() {
+        System.out.println("\n===== 📚 SISTEMA DE BIBLIOTECA 📚 =====");
+        System.out.println("1. ➕ Adicionar novo livro");
+        System.out.println("2. 🔍 Pesquisar livro por título");
+        System.out.println("3. 🗑️ Remover livro");
+        System.out.println("4. 📜 Listar todos os livros");
+        System.out.println("5. 🚪 Sair");
+        System.out.print("👉 Escolha uma opção: ");
 ```
 
     
@@ -88,6 +93,9 @@ class Livro {
 2) Verifica se você não deixou nada em branco (obrigado, validação!).
 3) Cria um novo Livro e joga na lista.
 4) Dá aquele feedback bacana: "Novo livro cadastrado com sucesso!"
+```java
+
+```
 
 
 <br>
@@ -99,7 +107,9 @@ class Livro {
 2) Ele percorre a lista toda.
 3) Se encontrar, mostra as infos.
 4) Se não, fala: "Livro não encontrado."
+```java
 
+```
 
 <br>
 <br>
@@ -110,7 +120,9 @@ class Livro {
 2) Ele procura na lista.
 3) Se achar, remove o livro e avisa: "Livro excluído com sucesso!"
 4) Se não, diz: "Operação falhou: livro não encontrado."
+```java
 
+```
 
 <br>
 <br>
@@ -119,14 +131,18 @@ class Livro {
 - Esse é o mais de boa. Ele só mostra tudo que está salvo.
 1) Se não tiver nada: "Nenhum livro cadastrado."
 2) Se tiver livros: ele imprime a lista toda, um por um.
+```java
 
+```
 
 <br>
 <br>
 
 # 🔁 O Loop principal (do...while)
 - O sistema roda num loop infinito (quase), até você escolher a opção 5 - Sair. Toda vez que você escolhe uma opção, ele chama o método correspondente. Depois volta pro menu.
+```java
 
+```
 
 <br>
      <hr>
