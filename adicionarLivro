@@ -1,1 +1,27 @@
+            switch (opcao) {
+
+                case 1:  // ➕ ADICIONAR LIVRO
+                    System.out.print("\n📝 Informe o título do livro: ");
+                    String titulo = scanner.nextLine().toUpperCase();
+
+                    if (titulo.isEmpty()) {
+                        System.out.println("\n🤔 Cadê o título? Não pode ser vazio não, hein!");
+                        break;
+                    }
+
+                    System.out.print("📝 Informe o autor(a): ");
+                    String autor = scanner.nextLine().toUpperCase();
+
+                    if (autor.isEmpty()) {
+                        System.out.println("\n🙄 Autor desconhecido? Coloca 'Anônimo' pelo menos!");
+                        break;
+                    }
+
+                    titulos.add(titulo);
+                    autores.add(autor);
+                    System.out.println("\n✅ SHOW! '" + titulo + "' foi adicionado com sucesso!");
+                    System.out.println("   Autor(a): " + autor);
+                    System.out.println("   Agora você tem " + titulos.size() + " livro(s) na biblioteca!");
+                    break;
+
 
