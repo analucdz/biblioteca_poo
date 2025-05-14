@@ -34,115 +34,129 @@
 
 
 # ☕ Primeiro - A ideia geral:
-- Esse programa é como um "sistema de bibliotecário virtual". Ele te deixa cadastrar livros, procurar livros pelo título, remover livros, e ver tudo o que já foi cadastrado. Tudo isso usando um menu simples no terminal.
+- Esse programa é como um "sistema de bibliotecário virtual", utilizando o ArrayList como base. Ele te deixa cadastrar livros, procurar livros pelo título, remover livros, e ver tudo o que já foi cadastrado. Tudo isso usando um menu simples no terminal.
 
 <br>
 <br>
 
 
-# 📦 Classe Livro – A caixinha de informações do livro
+# 🛠️ Estrutura do Código
+- Variáveis principais:
+- Dois ArrayLists que trabalham juntos para manter seu acervo organizado (sim, é uma gambiarra, mas funciona...o que é uma beleza, né?)
 ```java
-class Livro {
-    private String titulo;
-    private String autor;
-    // ...
-}
+ArrayList<String> titulos = new ArrayList<>();  // Armazena títulos dos livros
+ArrayList<String> autores = new ArrayList<>();  // Armazena autores correspondentes
+Scanner scanner = new Scanner(System.in);       // Para entrada de dados
 ```
-<br>
-->  Cada vez que você cadastra um livro, você cria um novo objeto Livro com: <br>
-* Um título <br>
-* Um autor <br>
-->  Ela também tem: <br>
-* Getters pra pegar essas informações. <br>
-* Um toString() que deixa o livro "bonitinho" quando a gente imprime: Título: O príncipe cruel | Autor: Holly Black <br>
-
 
 <br>
 <br>
 
-# 🧠 Classe Biblioteca – O cérebro do sistema
-## Aqui acontece toda a mágica. Ela tem:
-- Uma lista (ArrayList<Livro>) que guarda todos os livros.
-- Um scanner que lê o que você digita.
-- Um menu que aparece em loop até você escolher sair.
-
-
-<br>
-<br>
-
-# 📋 Método exibirMenu()
+# 🖥️ Método exibirMenu()
 - Mostra o cardápio de opções pro usuário. É só aquele bloquinho que imprime:
 ```java
- private static void exibirMenu() {
-        System.out.println("\n===== 📚 SISTEMA DE BIBLIOTECA 📚 =====");
-        System.out.println("1. ➕ Adicionar novo livro");
-        System.out.println("2. 🔍 Pesquisar livro por título");
-        System.out.println("3. 🗑️ Remover livro");
-        System.out.println("4. 📜 Listar todos os livros");
-        System.out.println("5. 🚪 Sair");
-        System.out.print("👉 Escolha uma opção: ");
+private static void exibirMenu() {
+    System.out.println("\n===== 📚 MENU PRINCIPAL 📚 =====");
+    System.out.println("1. ➕ Adicionar novo livro");
+    System.out.println("2. 🔍 Pesquisar livro");
+    System.out.println("3. 🗑️ Remover livro");
+    System.out.println("4. 📜 Listar todos");
+    System.out.println("5. 🚪 Sair");
+    System.out.print("👉 O que você quer fazer? ");
+}
+```
+
+
+<br>
+<br>
+
+# 🔄 Loop Principal
+- Mantém o programa em execução até o usuário escolher sair.
+```java
+do {
+    exibirMenu();
+    // ... tratamento de entrada
+    switch (opcao) {
+        // ... casos do switch
+    }
+} while (opcao != 5);
 ```
 
     
 <br>
 <br>
 
-# ➕ Método adicionarLivro()
-- Aqui é onde você cadastra um novo livro.
-1) Pede o título e autor.
-2) Verifica se você não deixou nada em branco (obrigado, validação!).
-3) Cria um novo Livro e joga na lista.
-4) Dá aquele feedback bacana: "Novo livro cadastrado com sucesso!"
+# ➕ Adicionar Livro 
+- Converte tudo para MAIÚSCULAS para padronizar.
+- Valida se os campos não estão vazios.
+- Mostra feedback animado após adicionar.
 ```java
+System.out.print("\n📝 Informe o título do livro: ");
+String titulo = scanner.nextLine().toUpperCase();
 
+System.out.print("📝 Informe o autor(a): ");
+String autor = scanner.nextLine().toUpperCase();
+
+titulos.add(titulo);
+autores.add(autor);
+System.out.println("\n✅ SHOW! '" + titulo + "' foi adicionado com sucesso!");
 ```
 
 
 <br>
 <br>
 
-# 🔍 Método pesquisarLivro()
-- Esse é o detetive do sistema 🕵️‍♂️.
-1) Você digita o título que quer achar.
-2) Ele percorre a lista toda.
-3) Se encontrar, mostra as infos.
-4) Se não, fala: "Livro não encontrado."
+# 🔍 Pesquisar Livro
+- Busca por correspondência parcial (não precisa digitar o nome completo).
+- Mostra a posição do livro na estante.
+- Feedback visual quando encontra ou não o livro.
 ```java
-
+for (int i = 0; i < titulos.size(); i++) {
+    if (titulos.get(i).toLowerCase().contains(busca)) {
+        System.out.println("\n🎉 ACHAMOS! 🎉");
+        System.out.println("Título: " + titulos.get(i));
+        System.out.println("✍Autor: " + autores.get(i));
+    }
+}
 ```
 
 <br>
 <br>
 
-# ❌ Método excluirLivro()
-- Aqui o sistema dá uma de destruidor (no bom sentido). 😅
-1) Você digita o título que quer remover.
-2) Ele procura na lista.
-3) Se achar, remove o livro e avisa: "Livro excluído com sucesso!"
-4) Se não, diz: "Operação falhou: livro não encontrado."
+# ❌ Remover Livro
+- Remove pelo título exato (case sensitive).
+- Atualiza o contador de livros automaticamente.
 ```java
-
+if (index != -1) {
+    titulos.remove(index);
+    autores.remove(index);
+    System.out.println("\n💥 *POOF* 💥");
+    System.out.println("   '" + livroRemovido + "' foi deletado com sucesso!");
+}
 ```
 
 <br>
 <br>
 
-# 📚 Método listarLivros()
-- Esse é o mais de boa. Ele só mostra tudo que está salvo.
-1) Se não tiver nada: "Nenhum livro cadastrado."
-2) Se tiver livros: ele imprime a lista toda, um por um.
+# 📚 Listar todos os Livros
+-Mostra todos os livros numerados.
+- Formatação bonitinha com separadores.
+- Mensagem especial quando a biblioteca está vazia.
 ```java
-
+for (int i = 0; i < titulos.size(); i++) {
+    System.out.println("📌 Posição " + (i + 1) + ":");
+    System.out.println("📖 Título: " + titulos.get(i));
+    System.out.println("✍️ Autor: " + autores.get(i));
+}
 ```
 
 <br>
 <br>
 
-# 🔁 O Loop principal (do...while)
-- O sistema roda num loop infinito (quase), até você escolher a opção 5 - Sair. Toda vez que você escolhe uma opção, ele chama o método correspondente. Depois volta pro menu.
-```java
-
-```
+# 🛠️ Tecnologias Utilizadas
+- ArrayList para armazenamento dinâmico.
+- Scanner para entrada de dados.
+- Muitos emojis para melhorar a experiência do usuário.
 
 <br>
      <hr>
