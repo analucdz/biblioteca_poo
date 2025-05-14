@@ -1,1 +1,172 @@
+import java.util.ArrayList;
+import java.util.Scanner;
 
+public class BibliotecaTurbo {
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<String> titulos = new ArrayList<>();
+        ArrayList<String> autores = new ArrayList<>();
+
+
+        int opcao;
+
+        do {
+            exibirMenu();
+
+            try {
+                opcao = scanner.nextInt();
+                scanner.nextLine();
+            } catch (Exception e) {
+                System.out.println("\n⚠️ Ei, só pode número de 1 a 5! Tenta de novo...");
+                scanner.nextLine();
+                opcao = 0;
+                continue;
+            }
+
+
+            switch (opcao) {
+
+                case 1:  // ➕ ADICIONAR LIVRO
+                    System.out.print("\n📝 Informe o título do livro: ");
+                    String titulo = scanner.nextLine().toUpperCase();
+
+                    if (titulo.isEmpty()) {
+                        System.out.println("\n🤔 Cadê o título? Não pode ser vazio não, hein!");
+                        break;
+                    }
+
+                    System.out.print("📝 Informe o autor(a): ");
+                    String autor = scanner.nextLine().toUpperCase();
+
+                    if (autor.isEmpty()) {
+                        System.out.println("\n🙄 Autor desconhecido? Coloca 'Anônimo' pelo menos!");
+                        break;
+                    }
+
+                    titulos.add(titulo);
+                    autores.add(autor);
+                    System.out.println("\n✅ SHOW! '" + titulo + "' foi adicionado com sucesso!");
+                    System.out.println("   Autor(a): " + autor);
+                    System.out.println("   Agora você tem " + titulos.size() + " livro(s) na biblioteca!");
+                    break;
+
+
+
+                case 2:  // 🔍 PESQUISAR LIVRO
+                    if (titulos.isEmpty()) {
+                        System.out.println("\n📚 A biblioteca está vazia...que tal adicionar um novo livro? ");
+                        break;
+                    }
+
+                    System.out.print("\n🔍 Qual livro estais procurando? ");
+                    String busca = scanner.nextLine().toLowerCase();
+
+                    boolean encontrou = false;
+                    System.out.println("\n Deixa eu ver...");
+
+                    for (int i = 0; i < titulos.size(); i++) {
+                        if (titulos.get(i).toLowerCase().contains(busca)) {
+                            System.out.println("\n🎉 ACHAMOS! 🎉");
+                            System.out.println("Título: " + titulos.get(i));
+                            System.out.println("✍Autor: " + autores.get(i));
+                            System.out.println("Posição na estante: " + (i + 1));
+                            System.out.println("-----------------------------");
+                            encontrou = true;
+                        }
+                    }
+
+                    if (!encontrou) {
+                        System.out.println("\n😵‍💫 Puts... Nada encontrado com '" + busca + "'");
+                        System.out.println("   Dica: Tenta escrever só parte do nome ou verificar se digitou certo!");
+                    } else {
+                        System.out.println("🔎 Busca finalizada! :D ");
+                    }
+                    break;
+
+
+
+                case 3:  // 🗑️ REMOVER LIVRO
+                    if (titulos.isEmpty()) {
+                        System.out.println("\n📚 Não tem nada para remover! A biblioteca tá zerada!");
+                        break;
+                    }
+
+                    System.out.print("\n🗑️ Qual livro quer remover? (digite o título exato) ");
+                    String tituloRemover = scanner.nextLine().toUpperCase();
+
+                    int index = -1;
+                    for (int i = 0; i < titulos.size(); i++) {
+                        if (titulos.get(i).equals(tituloRemover)) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    if (index != -1) {
+                        String livroRemovido = titulos.get(index);
+                        titulos.remove(index);
+                        autores.remove(index);
+                        System.out.println("\n💥 *POOF* 💥");
+                        System.out.println("   '" + livroRemovido + "' foi deletado com sucesso!");
+                        System.out.println("   Agora restam " + titulos.size() + " livro(s) na biblioteca.");
+                    } else {
+                        System.out.println("\n🤷‍♂️ Opa... Esse livro não tá aqui não!");
+                        System.out.println("   Dica: Digite o título exato como aparece na lista (use a opção 4 pra ver)");
+                    }
+                    break;
+
+
+                case 4:  // 📜 LISTAR TODOS
+                    if (titulos.isEmpty()) {
+                        System.out.println("\n📚 Opraí...nenhum livro ainda?!");
+                        System.out.println("   Vai lá, adiciona um livro pra alegrar esse lugar! (Opção 1)");
+                    } else {
+                        System.out.println("   ACERVO COMPLETO (" + titulos.size() + " LIVROS):");
+                        System.out.println("-----------------------------");
+
+                        for (int i = 0; i < titulos.size(); i++) {
+                            System.out.println("📌 Posição " + (i + 1) + ":");
+                            System.out.println("📖 Título: " + titulos.get(i));
+                            System.out.println("✍️ Autor: " + autores.get(i));
+                            System.out.println("-----------------------------");
+                        }
+
+                        System.out.println("Tá tão lindo né?");
+                    }
+                    break;
+
+
+                case 5:  // 🚪 SAIR
+                    System.out.println("\n👋");
+                    System.out.println("   Valeu por usar o sistema! Até a próxima, leitor!");
+                    System.out.println("   (Volte sempre que quiser adicionar mais livros!)");
+                    break;
+
+                default:
+                    System.out.println("\n🤨");
+                    System.out.println("   Opção inválida! É de 1 a 5, lembra?");
+                    System.out.println("   Vamos tentar de novo...");
+            }
+
+            // Pausa antes de voltar ao menu
+            if (opcao != 5) {
+                System.out.println("\n⏳ Pressione ENTER para continuar...");
+                scanner.nextLine();
+            }
+
+        } while (opcao != 5);
+
+        scanner.close();
+    }
+
+    private static void exibirMenu() {
+        System.out.println("\n===== 📚 MENU PRINCIPAL 📚 =====");
+        System.out.println("1. ➕ Adicionar novo livro");
+        System.out.println("2. 🔍 Pesquisar livro");
+        System.out.println("3. 🗑️ Remover livro (cuidado: some de verdade!)");
+        System.out.println("4. 📜 Listar todos (pra ver essa beleza)");
+        System.out.println("5. 🚪 Sair (snif... até logo)");
+        System.out.print("👉 O que você quer fazer? ");
+    }
+}
