@@ -1,0 +1,46 @@
+package bibliotecaPoo;
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Menu.exibir();
+    }
+
+    public static class Menu {
+        public static void exibir() {
+            Scanner scanner = new Scanner(System.in);
+            int opcao;
+            do {
+                System.out.println("\n===== 📚 MENU PRINCIPAL 📚 =====");
+                System.out.println("1. ➕ Adicionar novo livro");
+                System.out.println("2. 🔍 Pesquisar livro");
+                System.out.println("3. 🗑️ Remover livro");
+                System.out.println("4. 📜 Listar todos");
+                System.out.println("5. 🚪 Sair");
+                System.out.print("👉 O que você quer fazer? ");
+
+                try {
+                    opcao = scanner.nextInt();
+                    scanner.nextLine();
+                } catch (Exception e) {
+                    System.out.println("\n⚠️ Ei campeão, digita um NÚMERO válido aí, por favor!");
+                    scanner.nextLine();
+                    opcao = 0;
+                    continue;
+                }
+
+                switch (opcao) {
+                    case 1 -> Adicionar.executar(scanner);
+                    case 2 -> Pesquisar.executar(scanner);
+                    case 3 -> Remover.executar(scanner);
+                    case 4 -> Listar.executar();
+                    case 5 -> Encerrar.executar();
+                    default -> System.out.println("\n🤨 Opção inválida, meu chapa! Tenta de 1 a 5, por favor.");
+                }
+            } while (opcao != 5);
+
+            scanner.close();
+        }
+    }
+}
