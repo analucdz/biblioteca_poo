@@ -1,31 +1,23 @@
-case 2:  // 🔍 PESQUISAR LIVRO
-                    if (titulos.isEmpty()) {
-                        System.out.println("\n📚 A biblioteca está vazia...que tal adicionar um novo livro? ");
-                        break;
-                    }
+package bibliotecaPoo;
 
-                    System.out.print("\n🔍 Qual livro estais procurando? ");
-                    String busca = scanner.nextLine().toLowerCase();
+import java.util.Scanner;
 
-                    boolean encontrou = false;
-                    System.out.println("\n Deixa eu ver...");
-
-                    for (int i = 0; i < titulos.size(); i++) {
-                        if (titulos.get(i).toLowerCase().contains(busca)) {
-                            System.out.println("\n🎉 ACHAMOS! 🎉");
-                            System.out.println("Título: " + titulos.get(i));
-                            System.out.println("✍Autor: " + autores.get(i));
-                            System.out.println("Posição na estante: " + (i + 1));
-                            System.out.println("-----------------------------");
-                            encontrou = true;
-                        }
-                    }
-
-                    if (!encontrou) {
-                        System.out.println("\n😵‍💫 Puts... Nada encontrado com '" + busca + "'");
-                        System.out.println("   Dica: Tenta escrever só parte do nome ou verificar se digitou certo!");
-                    } else {
-                        System.out.println("🔎 Busca finalizada! :D ");
-                    }
-                    break;
-
+public class Pesquisar {
+    public static void executar(Scanner scanner) {
+        System.out.print("\n🔍 Qual livro tá procurando? (pode ser só parte do nome) ");
+        String busca = scanner.nextLine().toLowerCase();
+        boolean encontrou = false;
+        System.out.println("\n🕵️‍♂️ Resultados da sua pesquisa:");
+        for (int i = 0; i < BibliotecaDados.titulos.size(); i++) {
+            if (BibliotecaDados.titulos.get(i).toLowerCase().contains(busca)) {
+                System.out.println("📖 Título: " + BibliotecaDados.titulos.get(i));
+                System.out.println("✍️ Autor: " + BibliotecaDados.autores.get(i));
+                System.out.println("-----------------------------");
+                encontrou = true;
+            }
+        }
+        if (!encontrou) {
+            System.out.println("😵‍💫 Nada encontrado com '" + busca + "'. Tem certeza que escreveu certo?");
+        }
+    }
+}
