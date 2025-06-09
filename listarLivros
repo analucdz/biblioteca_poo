@@ -1,19 +1,16 @@
- case 4:  // 📜 LISTAR TODOS
-                    if (titulos.isEmpty()) {
-                        System.out.println("\n📚 Opraí...nenhum livro ainda?!");
-                        System.out.println("   Vai lá, adiciona um livro pra alegrar esse lugar! (Opção 1)");
-                    } else {
-                        System.out.println("   ACERVO COMPLETO (" + titulos.size() + " LIVROS):");
-                        System.out.println("-----------------------------");
+package bibliotecaPoo;
 
-                        for (int i = 0; i < titulos.size(); i++) {
-                            System.out.println("📌 Posição " + (i + 1) + ":");
-                            System.out.println("📖 Título: " + titulos.get(i));
-                            System.out.println("✍️ Autor: " + autores.get(i));
-                            System.out.println("-----------------------------");
-                        }
-
-                        System.out.println("Tá tão lindo né?");
-                    }
-                    break;
-
+public class Listar {
+    public static void executar() {
+        if (BibliotecaDados.titulos.isEmpty()) {
+            System.out.println("\n📚 Taí uma biblioteca triste... Nenhum livro ainda!");
+        } else {
+            System.out.println("\n📚 Acervo completo (" + BibliotecaDados.titulos.size() + " livros):");
+            for (int i = 0; i < BibliotecaDados.titulos.size(); i++) {
+                System.out.println("📖 Título: " + BibliotecaDados.titulos.get(i));
+                System.out.println("✍️ Autor: " + BibliotecaDados.autores.get(i));
+                System.out.println("-----------------------------");
+            }
+        }
+    }
+}
