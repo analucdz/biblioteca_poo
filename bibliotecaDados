@@ -1,0 +1,13 @@
+package bibliotecaPoo;
+
+import java.util.ArrayList;
+
+public class BibliotecaDados {
+    public static ArrayList<String> titulos = new ArrayList<>();
+    public static ArrayList<String> autores = new ArrayList<>();
+
+    public static void adicionarLivro(String titulo, String autor) {
+        titulos.add(titulo);
+        autores.add(autor);
+    }
+}
