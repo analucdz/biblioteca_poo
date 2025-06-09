@@ -1,22 +1,8 @@
  case 5:  // 🚪 SAIR
-                    System.out.println("\n👋");
-                    System.out.println("   Valeu por usar o sistema! Até a próxima, leitor!");
-                    System.out.println("   (Volte sempre que quiser adicionar mais livros!)");
-                    break;
+package bibliotecaPoo;
 
-                default:
-                    System.out.println("\n🤨");
-                    System.out.println("   Opção inválida! É de 1 a 5, lembra?");
-                    System.out.println("   Vamos tentar de novo...");
-            }
-
-            // Pausa antes de voltar ao menu
-            if (opcao != 5) {
-                System.out.println("\n⏳ Pressione ENTER para continuar...");
-                scanner.nextLine();
-            }
-
-        } while (opcao != 5);
-
-        scanner.close();
+public class Encerrar {
+    public static void executar() {
+        System.out.println("\n👋 Falou! Volte sempre à sua biblioteca virtual!");
     }
+}
