@@ -1,17 +1,11 @@
-import java.util.Scanner;
-
-public abstract class Material {
-    
-    
+public abstract class classeMaterial {
     private String titulo;
     private String autor;
-    
 
-    public Material(String titulo, String autor) {
+    public classeMaterial(String titulo, String autor) {
         this.titulo = titulo;
         this.autor = autor;
     }
-    
 
     public String getTitulo() {
         return titulo;
@@ -29,10 +23,8 @@ public abstract class Material {
         this.autor = autor;
     }
 
-    
-
     @Override
     public String toString() {
-        return "Título= " + titulo + "\nAutor= " + autor;
+        return "Título: " + titulo + "\nAutor: " + autor;
     }
 }
