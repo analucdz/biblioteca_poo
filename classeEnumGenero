@@ -1,0 +1,11 @@
+public enum Genero {
+
+    Romance,
+    Terror,
+    Fantasia,
+    Acao,
+    Scifi,
+    Suspense,
+    Infantil,
+
+}
