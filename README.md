@@ -14,17 +14,17 @@
         </ul>
             <hr>
             <hr>
-        <img src="https://github.com/user-attachments/assets/7aa9b3f5-a1b2-49af-b588-364a9c8f18a4" width="300px" style="border-radius: 90px"; align="right">
+
 
 </div> 
 <br>
 
 <p align="left"> <br>
 <b> O que você poderá fazer com nosso sistema: </b> <br> <br> 
-    - ✅ Adicionar novo livro (porque toda biblioteca precisa de mais aventuras!) <br> <br> 
-    - 🔍 Pesquisar livro por título (para achar aquele romance perdido no meio dos clássicos) <br> <br> 
-    - 🗑️ Excluir livro por título (se ele for muito antigo, muito danificado ou muito chato) <br> <br> 
-    - 📜 Listar todos os livros (e se perder na sua própria coleção como se fosse um leitor apaixonado) <br> <br> 
+    - ✅ Adicionar novo livro <br> <br> 
+    - 🔍 Pesquisar livro por título <br> <br> 
+    - 🗑️ Excluir livro por título <br> <br> 
+    - 📜 Listar todos os livros <br> <br> 
 </p> 
 
 
@@ -70,16 +70,19 @@ private static void exibirMenu() {
 <br>
 <br>
 
-# 🔄 Loop Principal
+# 🔄 Loop Principal / Opções 
 - Mantém o programa em execução até o usuário escolher sair.
 ```java
-do {
-    exibirMenu();
-    // ... tratamento de entrada
-    switch (opcao) {
-        // ... casos do switch
-    }
-} while (opcao != 5);
+        Menu.exibir();
+
+ switch (opcao) {
+                    case 1 -> Adicionar.executar(scanner);
+                    case 2 -> Pesquisar.executar(scanner);
+                    case 3 -> Remover.executar(scanner);
+                    case 4 -> Listar.executar();
+                    case 5 -> Encerrar.executar();
+                    default -> System.out.println("\n🤨 Opção inválida, meu chapa! Tenta de 1 a 5, por favor.");
+                }
 ```
 
     
@@ -91,15 +94,18 @@ do {
 - Valida se os campos não estão vazios.
 - Mostra feedback animado após adicionar.
 ```java
-System.out.print("\n📝 Informe o título do livro: ");
-String titulo = scanner.nextLine().toUpperCase();
+public class Adicionar {
+    public static void executar(Scanner scanner) {
+        System.out.print("\n📝 Qual o título do livro? ");
+        String titulo = scanner.nextLine().toUpperCase();
 
-System.out.print("📝 Informe o autor(a): ");
-String autor = scanner.nextLine().toUpperCase();
+        System.out.print("📝 E quem é o autor? ");
+        String autor = scanner.nextLine().toUpperCase();
 
-titulos.add(titulo);
-autores.add(autor);
-System.out.println("\n✅ SHOW! '" + titulo + "' foi adicionado com sucesso!");
+        BibliotecaDados.adicionarLivro(titulo, autor);
+        System.out.println("\n✅ Boa! Livro adicionado com sucesso!");
+    }
+}
 ```
 
 
@@ -111,11 +117,23 @@ System.out.println("\n✅ SHOW! '" + titulo + "' foi adicionado com sucesso!");
 - Mostra a posição do livro na estante.
 - Feedback visual quando encontra ou não o livro.
 ```java
-for (int i = 0; i < titulos.size(); i++) {
-    if (titulos.get(i).toLowerCase().contains(busca)) {
-        System.out.println("\n🎉 ACHAMOS! 🎉");
-        System.out.println("Título: " + titulos.get(i));
-        System.out.println("✍Autor: " + autores.get(i));
+public class Pesquisar {
+    public static void executar(Scanner scanner) {
+        System.out.print("\n🔍 Qual livro tá procurando? (pode ser só parte do nome) ");
+        String busca = scanner.nextLine().toLowerCase();
+        boolean encontrou = false;
+        System.out.println("\n🕵️‍♂️ Resultados da sua pesquisa:");
+        for (int i = 0; i < BibliotecaDados.titulos.size(); i++) {
+            if (BibliotecaDados.titulos.get(i).toLowerCase().contains(busca)) {
+                System.out.println("📖 Título: " + BibliotecaDados.titulos.get(i));
+                System.out.println("✍️ Autor: " + BibliotecaDados.autores.get(i));
+                System.out.println("-----------------------------");
+                encontrou = true;
+            }
+        }
+        if (!encontrou) {
+            System.out.println("😵‍💫 Nada encontrado com '" + busca + "'. Tem certeza que escreveu certo?");
+        }
     }
 }
 ```
@@ -127,11 +145,19 @@ for (int i = 0; i < titulos.size(); i++) {
 - Remove pelo título exato (case sensitive).
 - Atualiza o contador de livros automaticamente.
 ```java
-if (index != -1) {
-    titulos.remove(index);
-    autores.remove(index);
-    System.out.println("\n💥 *POOF* 💥");
-    System.out.println("   '" + livroRemovido + "' foi deletado com sucesso!");
+public class Remover {
+    public static void executar(Scanner scanner) {
+        System.out.print("\n🗑️ Qual livro quer remover? (digite o título exato) ");
+        String tituloRemover = scanner.nextLine().toUpperCase();
+        int index = BibliotecaDados.titulos.indexOf(tituloRemover);
+        if (index != -1) {
+            BibliotecaDados.titulos.remove(index);
+            BibliotecaDados.autores.remove(index);
+            System.out.println("\n🗑️ Pronto! Livro apagado da existência!");
+        } else {
+            System.out.println("\n🤷‍♂️ Ixi, não achei esse livro aí...");
+        }
+    }
 }
 ```
 
@@ -143,10 +169,19 @@ if (index != -1) {
 - Formatação bonitinha com separadores.
 - Mensagem especial quando a biblioteca está vazia.
 ```java
-for (int i = 0; i < titulos.size(); i++) {
-    System.out.println("📌 Posição " + (i + 1) + ":");
-    System.out.println("📖 Título: " + titulos.get(i));
-    System.out.println("✍️ Autor: " + autores.get(i));
+public class Listar {
+    public static void executar() {
+        if (BibliotecaDados.titulos.isEmpty()) {
+            System.out.println("\n📚 Taí uma biblioteca triste... Nenhum livro ainda!");
+        } else {
+            System.out.println("\n📚 Acervo completo (" + BibliotecaDados.titulos.size() + " livros):");
+            for (int i = 0; i < BibliotecaDados.titulos.size(); i++) {
+                System.out.println("📖 Título: " + BibliotecaDados.titulos.get(i));
+                System.out.println("✍️ Autor: " + BibliotecaDados.autores.get(i));
+                System.out.println("-----------------------------");
+            }
+        }
+    }
 }
 ```
 
