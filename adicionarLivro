@@ -4,10 +4,13 @@ import java.util.Scanner;
 
 public class Adicionar {
     public static void executar(Scanner scanner) {
+
         System.out.print("\n📝 Qual o título do livro? ");
         String titulo = scanner.nextLine().toUpperCase();
+
         System.out.print("📝 E quem é o autor? ");
         String autor = scanner.nextLine().toUpperCase();
+
         BibliotecaDados.adicionarLivro(titulo, autor);
         System.out.println("\n✅ Boa! Livro adicionado com sucesso!");
     }
