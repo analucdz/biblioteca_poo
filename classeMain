@@ -1,1 +1,134 @@
+import java.util.Scanner;
 
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+        classeBiblioteca biblioteca = new classeBiblioteca();
+
+        System.out.println("🌟 Bem-vindo ao Sistema de Biblioteca POO! 🌟");
+        System.out.println("===========================================");
+
+        while (true) {
+            System.out.println("\n📖 MENU PRINCIPAL:");
+            System.out.println("1️⃣ - Adicionar Livro");
+            System.out.println("2️⃣ - Adicionar Revista");
+            System.out.println("3️⃣ - Pesquisar Material por Título");
+            System.out.println("4️⃣ - Excluir Material");
+            System.out.println("5️⃣ - Listar Todos os Materiais");
+            System.out.println("0️⃣ - Sair");
+            System.out.print("👉 Escolha uma opção: ");
+
+            int opcao;
+            try {
+                opcao = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("\n❌ Opção inválida! Por favor, digite um número. ❌");
+                continue;
+            }
+
+            switch (opcao) {
+                case 1:
+                    adicionarLivro(scanner, biblioteca);
+                    break;
+                case 2:
+                    adicionarRevista(scanner, biblioteca);
+                    break;
+                case 3:
+                    pesquisarMaterial(scanner, biblioteca);
+                    break;
+                case 4:
+                    excluirMaterial(scanner, biblioteca);
+                    break;
+                case 5:
+                    biblioteca.listarMateriais();
+                    break;
+                case 0:
+                    System.out.println("\n👋 Até logo! Obrigado por usar nosso sistema! 👋");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("\n⚠️ Opção inválida! Por favor, tente novamente. ⚠️");
+            }
+        }
+    }
+
+    private static void adicionarLivro(Scanner scanner, classeBiblioteca biblioteca) {
+        System.out.println("\n📘 ADICIONAR NOVO LIVRO");
+        System.out.println("-----------------------");
+
+        System.out.print("Digite o título do livro: ");
+        String titulo = scanner.nextLine();
+
+        System.out.print("Digite o autor do livro: ");
+        String autor = scanner.nextLine();
+
+        System.out.println("\n📚 Gêneros disponíveis:");
+        for (Genero genero : Genero.values()) {
+            System.out.println("- " + genero);
+        }
+
+        System.out.print("Digite o gênero do livro: ");
+        String generoStr = scanner.nextLine();
+
+        try {
+            Genero genero = Genero.valueOf(generoStr);
+            classeLivro livro = new classeLivro(titulo, autor, genero);
+            biblioteca.adicionarMaterial(livro);
+            System.out.println("\n🎉 Livro adicionado com sucesso! Boa leitura! 🎉");
+        } catch (IllegalArgumentException e) {
+            System.out.println("\n❌ Gênero inválido! Por favor, escolha um gênero da lista. ❌");
+        }
+    }
+
+    private static void adicionarRevista(Scanner scanner, classeBiblioteca biblioteca) {
+        System.out.println("\n📰 ADICIONAR NOVA REVISTA");
+        System.out.println("-------------------------");
+
+        System.out.print("Digite o título da revista: ");
+        String titulo = scanner.nextLine();
+
+        System.out.print("Digite o autor/editora da revista: ");
+        String autor = scanner.nextLine();
+
+        System.out.print("Digite o número da revista: ");
+        try {
+            int numero = Integer.parseInt(scanner.nextLine());
+            classeRevista revista = new classeRevista(titulo, autor, numero);
+            biblioteca.adicionarMaterial(revista);
+            System.out.println("\n🎉 Revista adicionada com sucesso! Boa leitura! 🎉");
+        } catch (NumberFormatException e) {
+            System.out.println("\n❌ Número inválido! Por favor, digite um número inteiro positivo. ❌");
+        }
+    }
+
+    private static void pesquisarMaterial(Scanner scanner, classeBiblioteca biblioteca) {
+        System.out.println("\n🔍 PESQUISAR MATERIAL");
+        System.out.println("---------------------");
+
+        System.out.print("Digite o título do material que deseja pesquisar: ");
+        String titulo = scanner.nextLine();
+
+        System.out.println("\n🔎 Resultados da pesquisa:");
+        biblioteca.pesquisarPorTitulo(titulo);
+    }
+
+    private static void excluirMaterial(Scanner scanner, classeBiblioteca biblioteca) {
+        System.out.println("\n🗑️ EXCLUIR MATERIAL");
+        System.out.println("------------------");
+
+        System.out.print("Digite o título do material que deseja excluir: ");
+        String titulo = scanner.nextLine();
+
+        System.out.println("\n⚠️ Confirmar exclusão do material: " + titulo);
+        System.out.print("Digite 'SIM' para confirmar: ");
+        String confirmacao = scanner.nextLine();
+
+        if (confirmacao.equalsIgnoreCase("SIM")) {
+            biblioteca.excluirMaterial(titulo);
+            System.out.println("\n🗑️ Material removido da biblioteca! 🗑️");
+        } else {
+            System.out.println("\n✅ Operação cancelada. Nada foi excluído. ✅");
+        }
+    }
+}
