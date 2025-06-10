@@ -2,79 +2,78 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class classeBiblioteca {
-
     private List<classeMaterial> materiais;
-
 
     public classeBiblioteca() {
         this.materiais = new ArrayList<>();
+        System.out.println("📚 Biblioteca criada com sucesso! Pronta para receber novos materiais! 📚");
     }
-
 
     public void adicionarMaterial(classeMaterial material) {
         if (material == null) {
-            System.out.println("Material não pode ser nulo.");
+            System.out.println("❌ Oops! Material não pode ser nulo. Tente novamente! ❌");
             return;
         }
 
         if (material.getTitulo() == null || material.getTitulo().isEmpty() ||
                 material.getAutor() == null || material.getAutor().isEmpty()) {
-            System.out.println("Por favor, preencha todos os campos obrigatórios.");
+            System.out.println("⚠️ Atenção! Por favor, preencha todos os campos obrigatórios. ⚠️");
             return;
         }
 
         if (material instanceof classeLivro) {
             classeLivro livro = (classeLivro) material;
             if (livro.getGenero() == null) {
-                System.out.println("Gênero do livro é obrigatório.");
+                System.out.println("❌ Oops! Gênero do livro é obrigatório. ❌");
                 return;
             }
         } else if (material instanceof classeRevista) {
             classeRevista revista = (classeRevista) material;
             if (revista.getNumero() <= 0) {
-                System.out.println("Número da revista deve ser positivo.");
+                System.out.println("❌ Oops! Número da revista deve ser positivo. ❌");
                 return;
             }
         }
 
         materiais.add(material);
-        System.out.println("Novo material cadastrado com sucesso!");
-        System.out.println("Tipo: " + material.getClass().getSimpleName());
+        System.out.println("🎉 Novo material cadastrado com sucesso! 🎉");
+        System.out.println("📌 Tipo: " + material.getClass().getSimpleName());
+        System.out.println("📌 Título: " + material.getTitulo());
     }
-
 
     public void pesquisarPorTitulo(String titulo) {
         boolean encontrado = false;
+        System.out.println("\n🔍 Buscando por: " + titulo);
         for (classeMaterial material : materiais) {
             if (material.getTitulo().equalsIgnoreCase(titulo)) {
-                System.out.println(material);
+                System.out.println("✅ Encontrado: " + material);
                 encontrado = true;
             }
         }
         if (!encontrado) {
-            System.out.println("Nenhum material encontrado com o título: " + titulo);
+            System.out.println("🔎 Nenhum material encontrado com o título: " + titulo);
         }
     }
-
 
     public void excluirMaterial(String titulo) {
         boolean removido = materiais.removeIf(material -> material.getTitulo().equalsIgnoreCase(titulo));
         if (removido) {
-            System.out.println("Material excluído com sucesso!");
+            System.out.println("🗑️ Material '" + titulo + "' excluído com sucesso! 🗑️");
         } else {
-            System.out.println("Nenhum material encontrado com o título: " + titulo);
+            System.out.println("🔎 Nenhum material encontrado com o título: " + titulo);
         }
     }
 
-
     public void listarMateriais() {
         if (materiais.isEmpty()) {
-            System.out.println("Nenhum material cadastrado na biblioteca.");
+            System.out.println("📭 Nenhum material cadastrado na biblioteca. Que tal adicionar o primeiro? 📭");
         } else {
-            System.out.println("=== Materiais da Biblioteca ===");
+            System.out.println("\n📚=== Materiais da Biblioteca ===");
+            System.out.println("📚 Total de itens: " + materiais.size());
             for (classeMaterial material : materiais) {
-                System.out.println(material);
+                System.out.println("📌 " + material);
             }
+            System.out.println("📚=============================");
         }
     }
 }
